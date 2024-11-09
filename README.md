@@ -15,27 +15,27 @@ A simple SFTP server setup using Docker and `linuxserver/openssh-server`. This p
 ## Setup
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/sftp-backup.git
-   cd sftp-backup
+```bash
+git clone https://github.com/yourusername/sftp-backup.git
+cd sftp-backup
 ````
 
 2. Initialize directories and permissions:
-   ```bash
-   ./init.sh
-   ```
+```bash
+./init.sh
+```
 
 3. Start the SFTP server:
-   ```bash
-   docker-compose up -d
-   ```
+```bash
+docker-compose up -d
+```
 
 ## Usage
 
 - Connect to the SFTP server using an SFTP client or command line:
-  ```bash
-  sftp -P 2222 backup@your-server-ip
-  ```
+```bash
+sftp -P 2222 backup@your-server-ip
+```
   - **Username**: `backup`
   - **Password**: As set in `docker-compose.yml` (`yourpassword`)
 
