@@ -1,19 +1,13 @@
 services:
   sftp-server:
-    image: lscr.io/linuxserver/openssh-server:latest
+    build:
+      context: .
+      args:
+        BACKUP_PASSWORD: ${BACKUP_PASSWORD:-changeme}
     container_name: sftp-server
     hostname: sftp-server
-    environment:
-      - PUID=1000 # User ID
-      - PGID=1000 # Group ID
-      - TZ=Etc/UTC
-      - USER_NAME=backup # SFTP username
-      - USER_PASSWORD=yourpassword # SFTP user password
-      - PASSWORD_ACCESS=true # Enable password access
-      - SUDO_ACCESS=false # Disable sudo access
     volumes:
-      - ./sftp/config:/config # Configuration directory
-      - ./sftp/data:/home/backup # User home directory
+      - ./uploads:/home/backup/chroot/uploads # Uploads directory (persisted on host)
     ports:
       - 2222:2222
     restart: unless-stopped

@@ -1,0 +1,6 @@
+uploads/
+sftp/
+.git/
+*.md
+init.sh
+docker-compose.yml

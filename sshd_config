@@ -1,0 +1,44 @@
+# Custom SSHD Configuration for Upload-Only SFTP
+# This configuration restricts the backup user to upload files only
+
+# Basic SSH settings
+Port 2222
+Protocol 2
+
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
+
+# Authentication
+PermitRootLogin no
+PubkeyAuthentication yes
+PasswordAuthentication yes
+PermitEmptyPasswords no
+
+# Disable dangerous features globally
+X11Forwarding no
+AllowTcpForwarding no
+AllowAgentForwarding no
+PermitTunnel no
+GatewayPorts no
+
+# SFTP subsystem
+Subsystem sftp internal-sftp
+
+# Chroot configuration for backup user (upload-only SFTP)
+Match User backup
+    # Force SFTP only - no shell access
+    # Deny destructive operations (remove, rmdir, rename) while allowing uploads
+    ForceCommand internal-sftp -P remove,rmdir,rename
+
+    # Chroot to user directory
+    ChrootDirectory /home/backup/chroot
+
+    # Disable all forwarding and tunneling
+    X11Forwarding no
+    AllowTcpForwarding no
+    AllowAgentForwarding no
+    PermitTunnel no
+
+    # Only allow SFTP operations
+    PermitTTY no
